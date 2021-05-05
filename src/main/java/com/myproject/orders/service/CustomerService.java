@@ -26,19 +26,22 @@ public class CustomerService {
 
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper, CustomerValidator customerValidator) {
+    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper, CustomerValidator customerValidator, EmailValidator emailValidator) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.customerValidator = customerValidator;
+        this.emailValidator = emailValidator;
     }
 
     //    @Transactional(propagation = Propagation.REQUIRED) ???
-    public void createCustomer(CustomerDto customerDto) {
+    public CustomerDto createCustomer(CustomerDto customerDto) {
         if (!customerValidator.isAFieldEmptyOrNull(customerMapper.toDomain(customerDto))) {
             throw new IllegalArgumentException("All the filds can't be empty or null!");
         }
         emailValidator.isEmailCanBeSave(customerDto);
         customerRepository.save(customerMapper.toDomain(customerDto));
+
+        return customerDto;
     }
 
     public List<CustomerDto> getAllCustomer() {

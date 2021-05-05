@@ -15,24 +15,24 @@ import java.util.List;
 @RequestMapping(value = "/order/customer")
 public class CustomerController {
 
-    private CustomerService customerService;
+	private CustomerService customerService;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+	@Autowired
+	public CustomerController(CustomerService customerService) {
+		this.customerService = customerService;
+	}
 
-    // return void ou customerDto?
-    @PostMapping(value = "/createAccount", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createCustomer(@RequestBody CustomerDto customerDto) {
-        customerService.createCustomer(customerDto);
-    }
 
-    @GetMapping(value = "/allCustomer", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public List<CustomerDto> getAllCustomer(){
-        return customerService.getAllCustomer();
-    }
+	@PostMapping(value = "/createAccount", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
+		return customerService.createCustomer(customerDto);
+	}
+
+	@GetMapping(value = "/allCustomer", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public List<CustomerDto> getAllCustomer() {
+		return customerService.getAllCustomer();
+	}
 
 }

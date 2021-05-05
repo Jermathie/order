@@ -2,10 +2,11 @@ package com.myproject.orders.infrastructure.validators;
 
 import com.myproject.orders.api.dto.customers.CustomerDto;
 import com.myproject.orders.repository.CustomerRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
-
+@Component
 public class EmailValidator {
 
     CustomerRepository customerRepository;
@@ -15,7 +16,7 @@ public class EmailValidator {
     }
 
     private boolean checkIfEmailIsNotAlreadyRegistered(CustomerDto customerDto){
-        if (customerRepository.findByEmail(customerDto.getEmailAddress()).isPresent()){
+        if (customerRepository.findAllByEmailAddress(customerDto.getEmailAddress()).isPresent()){
             throw new IllegalArgumentException("This email is already registered");
         }
         return true;
